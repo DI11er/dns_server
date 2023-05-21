@@ -1,0 +1,20 @@
+version: '3.3'
+
+
+services:
+  dnsmasq:
+    build:
+      context: ./docker/dnsmasq
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+        - 53:53/udp
+        - 5380:8080
+    volumes:
+        - ./docker/dnsmasq/config/dnsmasq.conf:/etc/dnsmasq.conf
+    logging:
+        options:
+            max-size: 100m
+    environment:
+        - HTTP_USER=foo
+        - HTTP_PASS=bar
